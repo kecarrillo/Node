@@ -6,8 +6,30 @@ html(lang="fr")
     meta(name="viewport", content="width=device-width, initial-scale=1")
     title #{title}
     link(rel="stylesheet", type="text/css", href="./statics/css/style.css")
-    script(src="./statics/js/bootstrap")
+    link(rel='stylesheet' href='./bower_components/bootstrap/dist/css/bootstrap.css')
+    //- script(src="./statics/js/bootstrap")
   body
+    nav.navbar.navbar-inverse
+      .container
+        .navbar-header
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand(href='/') PhotoStream
+        #navbar.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li
+              a(href='/')
+                svg(width="2em", height="2em", viewBox="0 0 16 16", class="bi bi-house-door-fill text-success", fill="currentColor", xmlns="http://www.w3.org/2000/svg")
+                  path(d="M6.5 10.995V14.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5V11c0-.25-.25-.5-.5-.5H7c-.25 0-.5.25-.5.495z")
+                  path(fill-rule="evenodd", d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z")
+        
+            if user
+              li
+                a(href='/articles/add') Add Article
+
     // header(class="container-fluid")
     div(class="flex-center position-ref full-height row")
       div(class="top-left links")
