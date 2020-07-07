@@ -1,5 +1,5 @@
 {
-  "name": "FinalNode",
+  "name": "final-node",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,5 +8,13 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^4.5.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.5.9",
+    "mongoskin": "^2.1.0",
+    "pug": "^3.0.0",
+    "stylus": "^0.54.7"
+  }
 }
