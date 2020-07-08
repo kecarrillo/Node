@@ -3,7 +3,7 @@ extends layout
 block add
 
 br
-form(id="add-picture", method="POST", action="/images/add")
+form(id="add-picture", method="POST", action="/images/add", enctype="multipart/form-data")
   fieldset
     legend(class="text-success") Ajouter une image
       br

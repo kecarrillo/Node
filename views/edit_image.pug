@@ -9,7 +9,7 @@ block edit
       for error in errors
         li= error.msg
 br
-form(id="add-picture", method="POST", action="/images/edit")
+form(id="add-picture", method="POST", action="/images/edit", enctype="multipart/form-data")
   fieldset
     legend(class="text-success") Modifier une image
       br

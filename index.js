@@ -1,7 +1,7 @@
 const express = require('express');
 const http = require('http');
 const path = require('path');
-// const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
 
@@ -28,10 +28,10 @@ app.set('view engine', 'pug');
 
 // Set Views Folder
 app.use(express.static(path.join(__dirname, 'views')));
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 
 app.all('*',(req, resp)=>{
-    resp.render('index', { title: "PhotoStream"/*photos*/});
+    resp.render('index2', { title: "PhotoStream", datas: {title: "monTitre", author: "Bibi", body: ["monTitre2Tof", "/statics/img/img404.PNG"]}/*photos*/});
 });
 
 
