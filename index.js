@@ -4,6 +4,9 @@ const path = require('path');
 
 let app = express();
 
+// Bring in Models
+let Image = require('./models/image');
+
 app.set('appName', 'PhotoStream');
 app.set('port', process.env.PORT || 3001);
 app.set('views', path.join(__dirname, 'views') );
@@ -16,6 +19,20 @@ app.all('*',(req, resp)=>{
     resp.render('index', { title: "PhotoStream",/*photos*/});
 });
 
+
+// Display images from db in home page
+app.get('/', function(req, res){
+    Image.find({}, function(err, images){
+      if(err){
+        console.log(err);
+      } else {
+        res.render('index', {
+          title:'images',
+          images: images
+        });
+      }
+    });
+  });
 
 // Routes files
 let images = require('./routes/images');
