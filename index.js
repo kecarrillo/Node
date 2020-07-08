@@ -1,7 +1,7 @@
 const express = require('express');
 const http = require('http');
 const path = require('path');
-// const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
 
@@ -28,7 +28,7 @@ app.set('view engine', 'pug');
 
 // Set Views Folder
 app.use(express.static(path.join(__dirname, 'views')));
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 
 app.all('*',(req, resp)=>{
     resp.render('index', { title: "PhotoStream"/*photos*/});
@@ -50,9 +50,9 @@ app.all('*',(req, resp)=>{
 //   });
 
 // // Routes files
-// let images = require('./routes/images');
+let images = require('./routes/images');
 // let users = require('./routes/users');
-// app.use('/images', images);
+app.use('/images', images);
 // app.use('/users', users);
 
 http .createServer(app)
