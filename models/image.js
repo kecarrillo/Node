@@ -12,7 +12,7 @@ let imageSchema = mongoose.Schema({
     required: true
   },
   body:{
-    type: Binary,
+    type: Blob,
     required: true
   }
 });
