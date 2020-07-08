@@ -14,15 +14,16 @@ block carousel
 
     div(id="carouselExampleSlidesOnly", class="carousel slide", data-ride="carousel")
      ol(class="carousel-indicators")
-       each data, index in datas
-         li(data-target="#carouselExampleIndicators", data-slide-to=index, class="active")
+       each data in datas
+         li(data-target="#carouselExampleIndicators", data-slide-to=data.id, class="active")
      div(class="carousel-inner")
        div(class="carousel-item active")
-         each data, index in datas
-           img(class="d-block w-100", src= data.body, alt="slide")
-           div(class="carousel-caption d-none d-md-block")
-             h5= data.title
-             p= data.author
+         each data in datas
+           a(href=data.id)
+             img(class="d-block w-100", src= data.body, alt="slide")
+             div(class="carousel-caption d-none d-md-block")
+               h5= data.title
+               p= data.author
      a(class="carousel-control-prev", href="#carouselExampleControls", role="button", data-slide="prev")
        span(class="carousel-control-prev-icon", aria-hidden="true")
        span(class="sr-only") Previous

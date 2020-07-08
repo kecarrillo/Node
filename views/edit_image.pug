@@ -1,21 +1,33 @@
 extends layout
 
-block add
+block edit
 
+  - var data = #{data} || [{}]
+
+  if errors
+    ul.my-errors
+      for error in errors
+        li= error.msg
 br
-form(id="add-picture", method="POST", action="/images/add")
+form(id="add-picture", method="POST", action="/images/edit")
   fieldset
-    legend(class="text-success") Ajouter une image
+    legend(class="text-success") Modifier une image
       br
       div(class="form-group")
         label(for="title") Titre
-        input(type="text", class="form-control", id="title", name="title", aria-describedby="titleHelp", placeholder="Saisissez le titre de votre photo.")
+        if data.title
+          input(type="text", class="form-control", id="title", name="title", aria-describedby="titleHelp", placeholder=data.title)
+        else
+          input(type="text", class="form-control", id="title", name="title", aria-describedby="titleHelp", placeholder="Saisissez le titre de votre photo.")
         small(id="titleHelp", class="form-text text-muted") Titre associé à votre photo.
       div(class="form-group")
         label(for="body") Photo à poster
-        input(type="file", class="form-control", id="body", name="body", aria-describedby="bodyHelp", placeholder="Insérez votre photo.")
+        if data.body
+          input(type="file", class="form-control", id="body", name="body", aria-describedby="bodyHelp", placeholder=data.body)
+        else
+          input(type="file", class="form-control", id="body", name="body", aria-describedby="bodyHelp", placeholder="Insérez votre photo.")
         small(id="bodyHelp", class="form-text text-muted") Zone d'insertion de photo.
-      button(type="submit") Envoyer
+      button(type="submit") Renvoyer
       br
             progess(id="progress", min="0", max="100", aria-valuemin="0", aria-valuemax="100")
             output(id="infos")
@@ -75,5 +87,3 @@ form(id="add-picture", method="POST", action="/images/add")
             fd.append(inputPicture.name, picture);
             xhr.send(fd);
           }
-
-
