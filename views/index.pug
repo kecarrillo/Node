@@ -1,5 +1,13 @@
 extends layout
 
 block carousel
+
+  -data = data || {}
+
+  if errors
+    ul.my-errors
+      for error in errors
+        li= error.msg
+
   article
     h2 Faire défiler
