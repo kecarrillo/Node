@@ -50,9 +50,9 @@ app.all('*',(req, resp)=>{
 //   });
 
 // // Routes files
-// let images = require('./routes/images');
+let images = require('./routes/images');
 // let users = require('./routes/users');
-// app.use('/images', images);
+app.use('/images', images);
 // app.use('/users', users);
 
 http .createServer(app)
