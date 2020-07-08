@@ -3,6 +3,19 @@ const http = require('http');
 const path = require('path');
 // const bodyParser = require('body-parser');
 
+const mongoose = require('mongoose');
+
+// Connection to db
+let DB_URL = 'mongodb://localhost/mongoDb';
+mongoose.connect(DB_URL, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true
+}, () => {
+  console.log(`Connected to ${DB_URL} database for lesson`)
+});
+
+
+
 let app = express();
 
 // Bring in Models
