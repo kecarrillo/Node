@@ -10,28 +10,48 @@ block carousel
          li= error.msg
 
    article
-    h2 Faire défiler
+    h2(class="text-primary") Faire défiler
 
-    div(id="carouselExampleSlidesOnly", class="carousel slide", data-ride="carousel")
-     ol(class="carousel-indicators")
-       each data in datas
-         li(data-target="#carouselExampleIndicators", data-slide-to=data.id, class="active")
-     div(class="carousel-inner")
-       div(class="carousel-item active")
-         each data in datas
-           if data.body
-             for picture in data.body
-               a(href=data.id)
-                 img(class="d-block w-100", src= picture[1], alt="slide")
-           else
-             a(href=data.id)
-               img(class="d-block w-100", src="/statics/img/img404.PNG", alt="slide")
-               div(class="carousel-caption d-none d-md-block")
-                 h5= data.title
-                 p= data.author
-     a(class="carousel-control-prev", href="#carouselExampleControls", role="button", data-slide="prev")
-       span(class="carousel-control-prev-icon", aria-hidden="true")
-       span(class="sr-only") Previous
-     a(class="carousel-control-next", href="#carouselExampleControls", role="button", data-slide="next")
-       span(class="carousel-control-next-icon", aria-hidden="true")
-       span(class="sr-only") Next
+    br
+
+    div(id="carouselExampleControls", class="carousel slide", data-ride="carousel")
+      each data in datas
+        ol(class="carousel-indicators")
+          if data.id=1
+            li(data-target="#carouselExampleControls", data-slide-to=data.id, class="active")
+          else
+            li(data-target="#carouselExampleControls", data-slide-to=data.id)
+        div(class="carousel-inner")
+          if datas
+            if data.id=1
+              div(class="carousel-item active")
+                  if data.body
+                    a(href=data.id)
+                      figure(class="figure")
+                        img(class="d-block w-100 img-thumbnail figure-img img-fluid rounded", src=`${data.body[1]}`, alt= `${data.body[0]}`)
+                        div(class="carousel-caption d-none d-md-block")
+                          h5= data.title
+                          p= data.author
+            else
+              div(class="carousel-item")
+                  if data.body
+                    a(href=data.id)
+                      figure(class="figure")
+                        img(class="d-block w-100 img-thumbnail figure-img img-fluid rounded", src=`${data.body[1]}`, alt= `${data.body[0]}`)
+                        div(class="carousel-caption d-none d-md-block")
+                          h5= data.title
+                            p= data.author
+          else
+            div(class="carousel-item")
+              a(href=data.id)
+                figure(class="figure")
+                  img(class="d-block w-100 figure-img img-fluid rounded", src="/statics/img/img404.PNG", alt="slide")
+                  div(class="carousel-caption d-none d-md-block")
+                    h5= data.title
+                      p= data.author
+        a(class="carousel-control-prev", href="#carouselExampleControls", role="button", data-slide="prev")
+          span(class="carousel-control-prev-icon", aria-hidden="true")
+          span(class="sr-only") Previous
+        a(class="carousel-control-next", href="#carouselExampleControls", role="button", data-slide="next")
+          span(class="carousel-control-next-icon", aria-hidden="true")
+          span(class="sr-only") Next
