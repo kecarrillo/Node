@@ -16,6 +16,13 @@ app.all('*',(req, resp)=>{
     resp.render('index', { title: "PhotoStream",/*photos*/});
 });
 
+
+// Routes files
+let images = require('./routes/images');
+let users = require('./routes/users');
+app.use('/images', images);
+app.use('/users', users);
+
 http .createServer(app)
     .listen(
         app.get('port'),
