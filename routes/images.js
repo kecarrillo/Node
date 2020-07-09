@@ -24,6 +24,10 @@ router.post('/add', function (req, res) {
 
   // Get Errors
   let errors = req.validationErrors();
+  // read the received file
+  let reqImage = fs.readFileSync(req.body.body);
+  // Convert it to binary
+  let binImg = reqImage.toString('base64');
 
   if (errors) {
     res.render('add_image', {
@@ -31,18 +35,15 @@ router.post('/add', function (req, res) {
       errors: errors
     });
   } else {
-    // read the received file
-    let reqImage = fs.readFileSync(req.body.body);
-    // Convert it to binary
-    let binImg = reqImage.toString('base64');
+    
     let image = new Image();
     image.title = req.body.title;
     image.author = req.user._id;
     // pass the binary name file to buffer
-    image.body = new Buffer(reqImage);
+    image.body = new Buffer(binImg);
     image.save(function (err) {
       if (err) {
-        console.log("l'image n'a pu être sauvegardée en base de donnée dû à : " + err);
+        console.log("l'image n'a pu être sauvegardée en base de donnée puisque : " + err);
         return;
       } else {
         res.redirect('/');
@@ -52,7 +53,7 @@ router.post('/add', function (req, res) {
 });
 
 // Load Edit Form
-router.get('/edit/:id', checkAuthor, function (req, res) {
+router.get('/edit/:id', function (req, res) {
   Image.findById(req.params.id, function (err, image) {
     if (image.author != req.user._id) {
       return res.redirect('/');
