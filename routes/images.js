@@ -31,12 +31,15 @@ router.post('/add', function (req, res) {
       errors: errors
     });
   } else {
-    let reqImage = fs.readFileSync(req.body.body)
+    // read the received file
+    let reqImage = fs.readFileSync(req.body.body);
+    // Convert it to binary
+    let binImg = reqImage.toString('base64');
     let image = new Image();
     image.title = req.body.title;
     image.author = req.user._id;
+    // pass the binary name file to buffer
     image.body = new Buffer(reqImage);
-
     image.save(function (err) {
       if (err) {
         console.log("l'image n'a pu être sauvegardée en base de donnée dû à : " + err);
