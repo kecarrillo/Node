@@ -70,9 +70,10 @@ app.all('/',(req, resp)=>{
 //   });
 
 // // Routes files
-var images = require('./routes/images');
-// let users = require('./routes/users');
-app.use('/', images);
+
+app.use('/images', require('./routes/images'));
+app.use('/users', require('./routes/users'));
+
 // app.use('/users', users);
 
 http .createServer(app)

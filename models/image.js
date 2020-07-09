@@ -1,6 +1,4 @@
 let mongoose = require('mongoose');
-const { Binary } = require('mongodb');
-
 
 let imageSchema = mongoose.Schema({
   title:{
