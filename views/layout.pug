@@ -7,29 +7,34 @@ html(lang="fr")
     title #{title}
     link(rel='stylesheet', href='./statics/css/style.css')
     link(rel='stylesheet' href='./statics/bower_components/bootstrap/dist/css/bootstrap.css')
-    link(rel='stylesheet' href='./statics/bower_components/bootstrap/dist/js/bootstrap.js')
+    script(src="./statics/bower_components/jquery/dist/js/jquery.slim.js")
+    script(src="./statics/bower_components/bootstrap/dist/js/bootstrap.js")
+
   body
-    nav.navbar.navbar-inverse
-      .container-fluid
-        #navbar.collapse.navbar-collapse
-          ul.nav.navbar-nav
-            li
-              a(href='/', class="col-2", style="{margin-bottom: 5%;}")
-                svg(width="3em", height="3em", viewBox="0 0 16 16", class="bi bi-house-door-fill text-primary", fill="currentColor", xmlns="http://www.w3.org/2000/svg")
-                  path(d="M6.5 10.995V14.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5V11c0-.25-.25-.5-.5-.5H7c-.25 0-.5.25-.5.495z")
-                  path(fill-rule="evenodd", d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z")
-            li
-              h1(class="col-10 text-success") #{title}
-      .container-fluid
-        #navbar2.collapse.navbar-collapse
-          ul.nav.navbar-nav
-            li
-              a(href='/add', class="text-secondary") Ajouter une photo
+    header
+      nav.navbar.navbar-inverse
+        .container-fluid
+          #navbar.collapse.navbar-collapse
+            ul.nav.navbar-nav
+              li
+                a(href='/', class="col-2", style="{margin-bottom: 5%;}")
+                  svg(width="3em", height="3em", viewBox="0 0 16 16", class="bi bi-house-door-fill text-primary", fill="currentColor", xmlns="http://www.w3.org/2000/svg")
+                    path(d="M6.5 10.995V14.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-7a.5.5 0 0 1 .146-.354l6-6a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 .146.354v7a.5.5 0 0 1-.5.5h-4a.5.5 0 0 1-.5-.5V11c0-.25-.25-.5-.5-.5H7c-.25 0-.5.25-.5.495z")
+                    path(fill-rule="evenodd", d="M13 2.5V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z")
+              li
+                h1(class="col-10 text-success") #{title}
+        .container-fluid
+          #navbar2.collapse.navbar-collapse
+            ul.nav.navbar-nav
+              li
+                a(href='/add', class="text-secondary") Ajouter une photo
 
+    main
 
-    block carousel
-    block add
+      block carousel
 
-  footer(class="footer")
-    div(class="container")
-      p ©PhotoStream - By CS company
+    footer(class="footer")
+      div(class="container")
+        div(class="row")
+          div(class="col-md-12")
+              p ©PhotoStream - By CS company

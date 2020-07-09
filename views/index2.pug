@@ -10,11 +10,11 @@ block carousel
          li= error.msg
 
    article
-    h2(class="text-primary") Faire défiler
+    h2(class="text-primary text-center") Faire défiler
 
     br
 
-    div(id="carousel", class="carousel slide", data-ride="carousel")
+    div(id="carousel", class="carousel slide text-center", data-ride="carousel")
 
       ol(class="carousel-indicators")
         each data, index in datas
@@ -32,7 +32,7 @@ block carousel
                 div(class="carousel-item active")
                     if data.body
                       a(href=data.id)
-                          img(class="d-block w-100", src=`${data.body[1]}`, alt= `${data.body[0]}`)
+                          img(class="d-block w-50 img-thumbnail img-fluid", src=`${data.body[1]}`, alt= `${data.body[0]}`)
                           div(class="carousel-caption d-none d-md-block")
                             h5= data.title
                             p= data.author
@@ -40,7 +40,7 @@ block carousel
                 div(class="carousel-item")
                     if data.body
                       a(href=data.id)
-                          img(class="d-block w-100", src=`${data.body[1]}`, alt= `${data.body[0]}`)
+                          img(class="d-block w-50 img-thumbnail img-fluid", src=`${data.body[1]}`, alt= `${data.body[0]}`)
                           div(class="carousel-caption d-none d-md-block")
                             h5= data.title
                             p= data.author
