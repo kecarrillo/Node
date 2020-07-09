@@ -6,26 +6,33 @@ let Image = require('../models/image');
 // User Model
 let User = require('../models/user');
 
+
+// Check author of the image
+function checkAuthor(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    res.redirect('/users/login');
+  }
+}
+
 // Add Route
-router.get('/add', ensureAuthenticated, function(req, res){
+router.get('/add', checkAuthor, function (req, res) {
   res.render('add_image', {
-    title:'Add Image'
+    title: 'Add Image'
   });
 });
 
 // Add Submit POST Route
-router.post('/add', function(req, res){
-  req.checkBody('title','Title is required').notEmpty();
-  //req.checkBody('author','Author is required').notEmpty();
-  req.checkBody('body','Body is required').notEmpty();
+router.post('/add', function (req, res) {
 
   // Get Errors
   let errors = req.validationErrors();
 
-  if(errors){
+  if (errors) {
     res.render('add_image', {
-      title:'Add Image',
-      errors:errors
+      title: 'Add Image',
+      errors: errors
     });
   } else {
     let image = new Image();
@@ -33,12 +40,11 @@ router.post('/add', function(req, res){
     image.author = req.user._id;
     image.body = req.body.body;
 
-    image.save(function(err){
-      if(err){
-        console.log(err);
+    image.save(function (err) {
+      if (err) {
+        console.log("l'image n'a pu être sauvegardée en base de donnée dû à : " + err);
         return;
       } else {
-        req.flash('success','Image Added');
         res.redirect('/');
       }
     });
@@ -46,81 +52,69 @@ router.post('/add', function(req, res){
 });
 
 // Load Edit Form
-router.get('/edit/:id', ensureAuthenticated, function(req, res){
-  Image.findById(req.params.id, function(err, image){
-    if(image.author != req.user._id){
-      req.flash('danger', 'Not Authorized');
+router.get('/edit/:id', checkAuthor, function (req, res) {
+  Image.findById(req.params.id, function (err, image) {
+    if (image.author != req.user._id) {
       return res.redirect('/');
     }
     res.render('edit_image', {
-      title:'Edit Image',
-      image:image
+      title: 'Edit Image',
+      image: image
     });
   });
 });
 
 // Update Submit POST Route
-router.post('/edit/:id', function(req, res){
+router.post('/edit/:id', function (req, res) {
   let image = {};
   image.title = req.body.title;
   image.author = req.body.author;
   image.body = req.body.body;
 
-  let query = {_id:req.params.id}
+  let currentImage = { _id: req.params.id }
 
-  Image.update(query, image, function(err){
-    if(err){
+  Image.update(currentImage, image, function (err) {
+    if (err) {
       console.log(err);
       return;
     } else {
-      req.flash('success', 'Image Updated');
       res.redirect('/');
     }
   });
 });
 
-// Delete Image
-router.delete('/:id', function(req, res){
-  if(!req.user._id){
+// Delete the current image
+router.delete('/:id', function (req, res) {
+  if (!req.user._id) {
     res.status(500).send();
   }
 
-  let query = {_id:req.params.id}
+  let query = { _id: req.params.id }
 
-  Image.findById(req.params.id, function(err, image){
-    if(image.author != req.user._id){
+  Image.findById(req.params.id, function (err, image) {
+    if (image.author != req.user._id) {
       res.status(500).send();
     } else {
-      Image.remove(query, function(err){
-        if(err){
-          console.log(err);
+      Image.remove(query, function (err) {
+        if (err) {
+          console.log("l'image n'a pu être updatée en base de donnée dû à : " + err);
         }
-        res.send('Success');
+        res.send('Image supprimée');
       });
     }
   });
 });
 
-// Get Single Image
-router.get('/:id', function(req, res){
-  Image.findById(req.params.id, function(err, image){
-    User.findById(image.author, function(err, user){
+// Get one image
+router.get('/:id', function (req, res) {
+  Image.findById(req.params.id, function (err, image) {
+    User.findById(image.author, function (err, user) {
       res.render('image', {
-        image:image,
+        image: image,
         author: user.name
       });
     });
   });
 });
-
-// Access Control
-function ensureAuthenticated(req, res, next){
-  if(req.isAuthenticated()){
-    return next();
-  } else {
-    req.flash('danger', 'Please login');
-    res.redirect('/users/login');
-  }
-}
 
 module.exports = router;
