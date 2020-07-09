@@ -6,9 +6,14 @@ let Image = require('../models/image');
 // User Model
 let User = require('../models/user');
 
+// Home
+router.get('/', function (req, res) {
+  res.send({title: "PhotoStream"});
+});
+
 // Add Route
 router.get('/add', function(req, res){
-  res.render('add_image', {
+  res.render('../views/add_image', {
     title:'Add Image'
   });
 });
@@ -104,13 +109,10 @@ router.delete('/:id', function(req, res){
 // Get Single Image
 router.get('/:id', function(req, res){
   Image.findById(req.params.id, function(err, image){
-    User.findById(image.author, function(err, user){
       res.render('image', {
-        image:image,
-        author: user.name
+        image:image
       });
     });
-  });
 });
 
 // Access Control
