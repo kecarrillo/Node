@@ -2,27 +2,26 @@ extends layout
 
 block add
 
-br
-form(id="add-picture", method="POST", action="/images/add", enctype="multipart/form-data")
-  fieldset
-    legend(class="text-success") Ajouter une image
-      br
-      div(class="form-group")
-        label(for="title") Titre
-        input(type="text", class="form-control", id="title", name="title", aria-describedby="titleHelp", placeholder="Saisissez le titre de votre photo.")
-        small(id="titleHelp", class="form-text text-muted") Titre associé à votre photo.
-      div(class="form-group")
-        label(for="body") Photo à poster
-        input(type="file", class="form-control", id="body", name="body", aria-describedby="bodyHelp", placeholder="Insérez votre photo.")
-        small(id="bodyHelp", class="form-text text-muted") Zone d'insertion de photo.
-      button(type="submit") Envoyer
-      br
-            progess(id="progress", min="0", max="100", aria-valuemin="0", aria-valuemax="100")
-            output(id="infos")
+  form(id="add-picture", method="POST", action="/images/add", enctype="multipart/form-data")
+    fieldset
+      legend(class="text-success") Ajouter une image
+        br
+        div(class="form-group")
+          label(for="title") Titre
+          input(type="text", class="form-control", id="title", name="title", aria-describedby="titleHelp", placeholder="Saisissez le titre de votre photo.")
+          small(id="titleHelp", class="form-text text-muted") Titre associé à votre photo.
+        div(class="form-group")
+          label(for="body") Photo à poster
+          input(type="file", class="form-control", id="body", name="body", aria-describedby="bodyHelp", placeholder="Insérez votre photo.")
+          small(id="bodyHelp", class="form-text text-muted") Zone d'insertion de photo.
+        button(type="submit") Envoyer
+        br
+        progess(id="progress", min="0", max="100", aria-valuemin="0", aria-valuemax="100")
+        output(id="infos")
 
         script.
           var form = document.getElementById("add-picture");
-          var progression = document.getElementById("progress");
+          var progress = document.getElementById("progress");
           var infos = document.getElementById("infos");
 
           form.onsubmit = function(event){
@@ -75,5 +74,3 @@ form(id="add-picture", method="POST", action="/images/add", enctype="multipart/f
             fd.append(inputPicture.name, picture);
             xhr.send(fd);
           }
-
-

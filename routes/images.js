@@ -6,20 +6,15 @@ let Image = require('../models/image');
 // User Model
 let User = require('../models/user');
 
-
-// Check author of the image
-function checkAuthor(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  } else {
-    res.redirect('/users/login');
-  }
-}
+// Home
+router.get('/', function (req, res) {
+  res.send({title: "PhotoStream"});
+});
 
 // Add Route
-router.get('/add', checkAuthor, function (req, res) {
-  res.render('add_image', {
-    title: 'Add Image'
+router.get('/add', function(req, res){
+  res.render('../views/add_image', {
+    title:'Add Image'
   });
 });
 
@@ -105,16 +100,13 @@ router.delete('/:id', function (req, res) {
   });
 });
 
-// Get one image
-router.get('/:id', function (req, res) {
-  Image.findById(req.params.id, function (err, image) {
-    User.findById(image.author, function (err, user) {
+// Get Single Image
+router.get('/:id', function(req, res){
+  Image.findById(req.params.id, function(err, image){
       res.render('image', {
-        image: image,
-        author: user.name
+        image:image
       });
     });
-  });
 });
 
 module.exports = router;

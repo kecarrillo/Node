@@ -34,20 +34,7 @@ app.use(express.static(path.join(__dirname, 'views')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Express Session Middleware
-app.use(session({
-  secret: 'keyboard cat',
-  resave: true,
-  saveUninitialized: true
-}));
-
-// Passport Config
-require('./config/passport')(passport);
-// Passport Middleware
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.all('*',(req, resp)=>{
+app.all('/',(req, resp)=>{
     resp.render('index2',
         { title: "PhotoStream", datas: [{id: "1", title: "monTitre", author: "Bibi", body: ["monTitre2Tof", "/statics/img/ground.jpg"]},
         {id: "2", title: "monTitre2", author: "Bibi", body: ["monTitre2Tof2", "/statics/img/exercice.jpg"]}]
@@ -70,10 +57,10 @@ app.all('*',(req, resp)=>{
 //   });
 
 // // Routes files
-let images = require('./routes/images');
-let users = require('./routes/users');
-app.use('/images', images);
-app.use('/users', users);
+var images = require('./routes/images');
+// let users = require('./routes/users');
+app.use('/', images);
+// app.use('/users', users);
 
 http .createServer(app)
     .listen(
