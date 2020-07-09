@@ -7,7 +7,7 @@ let Image = require('../models/image');
 let User = require('../models/user');
 
 // Add Route
-router.get('/add', ensureAuthenticated, function(req, res){
+router.get('/add', function(req, res){
   res.render('add_image', {
     title:'Add Image'
   });
@@ -46,7 +46,7 @@ router.post('/add', function(req, res){
 });
 
 // Load Edit Form
-router.get('/edit/:id', ensureAuthenticated, function(req, res){
+router.get('/edit/:id', function(req, res){
   Image.findById(req.params.id, function(err, image){
     if(image.author != req.user._id){
       req.flash('danger', 'Not Authorized');
