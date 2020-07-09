@@ -20,9 +20,9 @@ block carousel
         each data, index in datas
           case index
             when 0
-              li(data-target="#carousel", data-slide-to=data.id, class="active")
+              li(data-target="#carousel", data-slide-to=index, class="active")
             default
-              li(data-target="#carousel", data-slide-to=data.id)
+              li(data-target="#carousel", data-slide-to=index)
 
       div(class="carousel-inner")
         each data, index in datas
@@ -32,8 +32,7 @@ block carousel
                 div(class="carousel-item active")
                     if data.body
                       a(href=data.id)
-                        figure(class="figure")
-                          img(class="d-block w-100 img-thumbnail figure-img img-fluid rounded", src=`${data.body[1]}`, alt= `${data.body[0]}`)
+                          img(class="d-block w-100", src=`${data.body[1]}`, alt= `${data.body[0]}`)
                           div(class="carousel-caption d-none d-md-block")
                             h5= data.title
                             p= data.author
@@ -41,16 +40,14 @@ block carousel
                 div(class="carousel-item")
                     if data.body
                       a(href=data.id)
-                        figure(class="figure")
-                          img(class="d-block w-100 img-thumbnail figure-img img-fluid rounded", src=`${data.body[1]}`, alt= `${data.body[0]}`)
+                          img(class="d-block w-100", src=`${data.body[1]}`, alt= `${data.body[0]}`)
                           div(class="carousel-caption d-none d-md-block")
                             h5= data.title
                             p= data.author
           else
             div(class="carousel-item")
               a(href=data.id)
-                figure(class="figure")
-                  img(class="d-block w-100 figure-img img-fluid rounded", src="/statics/img/img404.PNG", alt="slide")
+                  img(class="d-block w-100", src="/statics/img/img404.PNG", alt="vide")
                   div(class="carousel-caption d-none d-md-block")
                     h5= data.title
                     p= data.author
