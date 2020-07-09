@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
 
 // Image Model
 let Image = require('../models/image');
@@ -30,10 +31,11 @@ router.post('/add', function (req, res) {
       errors: errors
     });
   } else {
+    let reqImage = fs.readFileSync(req.body.body)
     let image = new Image();
     image.title = req.body.title;
     image.author = req.user._id;
-    image.body = req.body.body;
+    image.body = new Buffer(reqImage);
 
     image.save(function (err) {
       if (err) {

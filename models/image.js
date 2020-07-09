@@ -11,10 +11,10 @@ let imageSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  // body:{
-  //   type: Blob,
-  //   required: true
-  // }
+  body:{
+    type: Buffer,
+    required: true
+  }
 });
 
 let Image = module.exports = mongoose.model('Image', imageSchema);
