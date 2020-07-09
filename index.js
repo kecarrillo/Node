@@ -48,8 +48,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.all('*',(req, resp)=>{
-    resp.render('index2', { title: "PhotoStream", datas: [{id: "1", title: "monTitre", author: "Bibi", body: ["monTitre2Tof", "/statics/img/ground.jpg"]},
-            {id: "2", title: "monTitre2", author: "Bibi", body: ["monTitre2Tof2", "/statics/img/exercice.jpg"]}]/*photos*/});
+    resp.render('index2',
+        { title: "PhotoStream", datas: [{id: "1", title: "monTitre", author: "Bibi", body: ["monTitre2Tof", "/statics/img/ground.jpg"]},
+        {id: "2", title: "monTitre2", author: "Bibi", body: ["monTitre2Tof2", "/statics/img/exercice.jpg"]}]
+        });
 });
 
 
