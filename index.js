@@ -2,6 +2,8 @@ const express = require('express');
 const http = require('http');
 const path = require('path');
 const bodyParser = require('body-parser');
+const passport = require('passport');
+const session = require('express-session');
 
 const mongoose = require('mongoose');
 
@@ -28,7 +30,22 @@ app.set('view engine', 'pug');
 
 // Set Views Folder
 app.use(express.static(path.join(__dirname, 'views')));
+// Body-parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// Express Session Middleware
+app.use(session({
+  secret: 'keyboard cat',
+  resave: true,
+  saveUninitialized: true
+}));
+
+// Passport Config
+require('./config/passport')(passport);
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.all('/',(req, resp)=>{
     resp.render('index2',
@@ -53,9 +70,10 @@ app.all('/',(req, resp)=>{
 //   });
 
 // // Routes files
-var images = require('./routes/images');
-// let users = require('./routes/users');
-app.use('/', images);
+
+app.use('/images', require('./routes/images'));
+app.use('/users', require('./routes/users'));
+
 // app.use('/users', users);
 
 http .createServer(app)

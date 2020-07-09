@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const fs = require('fs');
 
 // Image Model
 let Image = require('../models/image');
@@ -19,31 +20,32 @@ router.get('/add', function(req, res){
 });
 
 // Add Submit POST Route
-router.post('/add', function(req, res){
-  req.checkBody('title','Title is required').notEmpty();
-  //req.checkBody('author','Author is required').notEmpty();
-  req.checkBody('body','Body is required').notEmpty();
+router.post('/add', function (req, res) {
 
   // Get Errors
   let errors = req.validationErrors();
+  // read the received file
+  let reqImage = fs.readFileSync(req.body.body);
+  // Convert it to binary
+  let binImg = reqImage.toString('base64');
 
-  if(errors){
+  if (errors) {
     res.render('add_image', {
-      title:'Add Image',
-      errors:errors
+      title: 'Add Image',
+      errors: errors
     });
   } else {
+    
     let image = new Image();
     image.title = req.body.title;
     image.author = req.user._id;
-    image.body = req.body.body;
-
-    image.save(function(err){
-      if(err){
-        console.log(err);
+    // pass the binary name file to buffer
+    image.body = new Buffer(binImg);
+    image.save(function (err) {
+      if (err) {
+        console.log("l'image n'a pu être sauvegardée en base de donnée puisque : " + err);
         return;
       } else {
-        req.flash('success','Image Added');
         res.redirect('/');
       }
     });
@@ -51,56 +53,54 @@ router.post('/add', function(req, res){
 });
 
 // Load Edit Form
-router.get('/edit/:id', function(req, res){
-  Image.findById(req.params.id, function(err, image){
-    if(image.author != req.user._id){
-      req.flash('danger', 'Not Authorized');
+router.get('/edit/:id', function (req, res) {
+  Image.findById(req.params.id, function (err, image) {
+    if (image.author != req.user._id) {
       return res.redirect('/');
     }
     res.render('edit_image', {
-      title:'Edit Image',
-      image:image
+      title: 'Edit Image',
+      image: image
     });
   });
 });
 
 // Update Submit POST Route
-router.post('/edit/:id', function(req, res){
+router.post('/edit/:id', function (req, res) {
   let image = {};
   image.title = req.body.title;
   image.author = req.body.author;
   image.body = req.body.body;
 
-  let query = {_id:req.params.id}
+  let currentImage = { _id: req.params.id }
 
-  Image.update(query, image, function(err){
-    if(err){
+  Image.update(currentImage, image, function (err) {
+    if (err) {
       console.log(err);
       return;
     } else {
-      req.flash('success', 'Image Updated');
       res.redirect('/');
     }
   });
 });
 
-// Delete Image
-router.delete('/:id', function(req, res){
-  if(!req.user._id){
+// Delete the current image
+router.delete('/:id', function (req, res) {
+  if (!req.user._id) {
     res.status(500).send();
   }
 
-  let query = {_id:req.params.id}
+  let query = { _id: req.params.id }
 
-  Image.findById(req.params.id, function(err, image){
-    if(image.author != req.user._id){
+  Image.findById(req.params.id, function (err, image) {
+    if (image.author != req.user._id) {
       res.status(500).send();
     } else {
-      Image.remove(query, function(err){
-        if(err){
-          console.log(err);
+      Image.remove(query, function (err) {
+        if (err) {
+          console.log("l'image n'a pu être updatée en base de donnée dû à : " + err);
         }
-        res.send('Success');
+        res.send('Image supprimée');
       });
     }
   });
@@ -114,15 +114,5 @@ router.get('/:id', function(req, res){
       });
     });
 });
-
-// Access Control
-function ensureAuthenticated(req, res, next){
-  if(req.isAuthenticated()){
-    return next();
-  } else {
-    req.flash('danger', 'Please login');
-    res.redirect('/users/login');
-  }
-}
 
 module.exports = router;
