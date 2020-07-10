@@ -14,28 +14,24 @@ router.get('/', function (req, res) {
 // Add Route
 router.get('/add', function(req, res){
   res.render('../views/add_image', {
-    title:'Add Image'
+    title:'Ajouter Image'
   });
 });
 
 // Add Submit POST Route
 router.post('/add', function(req, res){
-  req.checkBody('title','Title is required').notEmpty();
-  //req.checkBody('author','Author is required').notEmpty();
-  req.checkBody('body','Body is required').notEmpty();
 
   // Get Errors
   let errors = req.validationErrors();
 
   if(errors){
     res.render('add_image', {
-      title:'Add Image',
+      title:'Ajouter Image',
       errors:errors
     });
   } else {
     let image = new Image();
     image.title = req.body.title;
-    image.author = req.user._id;
     image.body = req.body.body;
 
     image.save(function(err){
