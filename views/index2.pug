@@ -14,6 +14,7 @@ block carousel
 
     br
 
+
     div(id="carousel", class="carousel slide text-center", data-ride="carousel")
 
       ol(class="carousel-indicators")
@@ -30,27 +31,29 @@ block carousel
             case index
               when 0
                 div(class="carousel-item active")
-                    if data.body
+                  if data.body
+                    figure(class="figure")
                       a(href=data.id)
-                          img(class="d-block w-50 img-thumbnail img-fluid", src=`${data.body[1]}`, alt= `${data.body[0]}`)
-                          div(class="carousel-caption d-none d-md-block")
-                            h5= data.title
-                            p= data.author
+                        img(class="d-block w-50 img-thumbnail img-fluid", src=`${data.body[1]}`, alt= `${data.body[0]}`)
+                        figcaption(class="figure-caption d-none d-md-block text-success text-left")
+                          h5= data.title
+                          p= data.author
               default
                 div(class="carousel-item")
-                    if data.body
+                  if data.body
+                    figure(class="figure")
                       a(href=data.id)
-                          img(class="d-block w-50 img-thumbnail img-fluid", src=`${data.body[1]}`, alt= `${data.body[0]}`)
-                          div(class="carousel-caption d-none d-md-block")
-                            h5= data.title
-                            p= data.author
+                        img(class="d-block w-50 img-thumbnail img-fluid", src=`${data.body[1]}`, alt= `${data.body[0]}`)
+                        figcaption(class="figure-caption d-none d-md-block text-success text-left")
+                          h5= data.title
+                          p= data.author
           else
             div(class="carousel-item")
               a(href=data.id)
-                  img(class="d-block w-100", src="/statics/img/img404.PNG", alt="vide")
-                  div(class="carousel-caption d-none d-md-block")
-                    h5= data.title
-                    p= data.author
+                img(class="d-block w-50 img-thumbnail img-fluid", src="/statics/img/img404.PNG", alt="vide")
+                div(class="figure-caption d-none d-md-block text-success text-left")
+                  h5= data.title
+                  p= data.author
       a(class="carousel-control-prev", href="#carousel", role="button", data-slide="prev")
         span(class="carousel-control-prev-icon", aria-hidden="true")
         span(class="sr-only") Précédent
