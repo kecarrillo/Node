@@ -9,16 +9,26 @@ block carousel
       for error in errors
         li= error.msg
 
-  h1(class="text-success")
-    br
-    p= `Auteur: ${data.author}`
-    br
-    figure
-      img(src=data.body, alt="photo à editer")
-      figcaption= data.title
-    a(href=`/edit/${data.id}`)
-      button(class="text-secondary") Modifier
-    form(method="delete", action="/image/delete")
-       input(value=data.id, name="id", hidden=true)
-       button(class="text-danger", type="submit") Supprimer
+  h1(class="text-success text-center")= `Détails de la photo "${data.title}"`
+  div(class="container-fluid card", style="max-width: 85rem;")
+    div(class="container-fluid card-header bg-success")
+
+      br
+      p= `Auteur: ${data.author}`
+      br
+
+    div(class="container-fluid card-body")
+      figure
+        img(src=data.body, alt="photo à editer")
+        figcaption= data.title
+      br
+    div(class="container-fluid card-footer bg-success")
+      div(class="row", role="group", aria-label="Basic example")
+        div(class="col-2")
+          a(href=`/edit/${data.id}`)
+            button(class="btn btn-success") Modifier
+        div(class="col-2")
+          form(method="delete", action="/image/delete")
+             input(value=data.id, name="id", hidden=true)
+             button(class="btn btn-danger", type="submit") Supprimer
 
