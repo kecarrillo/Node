@@ -5,11 +5,11 @@ const fs = require('fs');
 // Image Model
 let Image = require('../models/image');
 // User Model
-let User = require('../models/user');
+// let User = require('../models/user');
 
 // Home
 router.get('/', function (req, res) {
-  res.send({title: "PhotoStream"});
+  res.render('../views/index2',{title: "PhotoStream"});
 });
 
 // Add Route
@@ -20,45 +20,24 @@ router.get('/add', function(req, res){
 });
 
 // Add Submit POST Route
-router.post('/add', function(req, res){
+router.post('/add/loading', function(req, res){
 
-
-  // Get Errors
-  let errors = req.validationErrors();
-  // read the received file
-  let reqImage = fs.readFileSync(req.body.body);
-  // Convert it to binary
-  let binImg = reqImage.toString('base64');
-
-  if (errors) {
-    res.render('add_image', {
-    title:'Ajouter Image',
-    errors:errors
-    });
-  } else {
-    
     let image = new Image();
-    image.title = req.body.title;
-    image.body = req.body.body;
+    image.title = req.body.title || "vide";
+    image.body = req.body.body || "#";
 
     image.save(function(err){
       if(err){
         console.log(err);
-
-        return;
       } else {
-        res.redirect('/');
+        res.redirect('/', {title: "PhotoStream"});
       }
     });
-  }
 });
 
 // Load Edit Form
 router.get('/edit/:id', function (req, res) {
   Image.findById(req.params.id, function (err, image) {
-    if (image.author != req.user._id) {
-      return res.redirect('/');
-    }
     res.render('edit_image', {
       title: 'Edit Image',
       image: image
@@ -70,40 +49,34 @@ router.get('/edit/:id', function (req, res) {
 router.post('/edit/:id', function (req, res) {
   let image = {};
   image.title = req.body.title;
-  image.author = req.body.author;
   image.body = req.body.body;
 
-  let currentImage = { _id: req.params.id }
+  let currentImage = { _id: req.params.id };
 
   Image.update(currentImage, image, function (err) {
     if (err) {
       console.log(err);
-      return;
+
     } else {
-      res.redirect('/');
+      res.redirect('/', {title: "PhotoStream"});
     }
   });
 });
 
 // Delete the current image
 router.delete('/:id', function (req, res) {
-  if (!req.user._id) {
-    res.status(500).send();
-  }
 
-  let query = { _id: req.params.id }
+  let query = { _id: req.params.id };
 
   Image.findById(req.params.id, function (err, image) {
-    if (image.author != req.user._id) {
-      res.status(500).send();
-    } else {
+
       Image.remove(query, function (err) {
         if (err) {
           console.log("l'image n'a pu être updatée en base de donnée dû à : " + err);
         }
         res.send('Image supprimée');
       });
-    }
+
   });
 });
 

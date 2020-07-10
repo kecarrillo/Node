@@ -5,12 +5,8 @@ let imageSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  author:{
-    type: String,
-    required: true
-  },
   body:{
-    type: Buffer,
+    type: String,
     required: true
   }
 });
