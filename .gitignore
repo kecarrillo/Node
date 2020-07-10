@@ -1,4 +1,4 @@
 # IntelliJ
 .idea
 # Modules node
-node_modules library root/
+*/node_modules library root/

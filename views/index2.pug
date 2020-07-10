@@ -2,58 +2,65 @@ extends layout
 
 block carousel
 
-   - var datas = datas || [{}]
+    - var datas = files || [{}]
 
-   if errors
-     ul.my-errors
-       for error in errors
-         li= error.msg
+    if errors
+        ul.my-errors
+            for error in errors
+                li= error.msg
 
-   article
-    h2(class="text-primary") Faire défiler
+    article
+        h2(class="text-primary text-center") Faire défiler
 
-    br
+        br
 
-    div(id="carousel", class="carousel slide", data-ride="carousel")
 
-      ol(class="carousel-indicators")
-        each data, index in datas
-          case index
-            when 0
-              li(data-target="#carousel", data-slide-to=index, class="active")
-            default
-              li(data-target="#carousel", data-slide-to=index)
+        div(id="carousel", class="carousel slide text-center", data-ride="carousel")
 
-      div(class="carousel-inner")
-        each data, index in datas
-          if datas
-            case index
-              when 0
-                div(class="carousel-item active")
-                    if data.body
-                      a(href=data.id)
-                          img(class="d-block w-100", src=`${data.body[1]}`, alt= `${data.body[0]}`)
-                          div(class="carousel-caption d-none d-md-block")
-                            h5= data.title
-                            p= data.author
-              default
-                div(class="carousel-item")
-                    if data.body
-                      a(href=data.id)
-                          img(class="d-block w-100", src=`${data.body[1]}`, alt= `${data.body[0]}`)
-                          div(class="carousel-caption d-none d-md-block")
-                            h5= data.title
-                            p= data.author
-          else
-            div(class="carousel-item")
-              a(href=data.id)
-                  img(class="d-block w-100", src="/statics/img/img404.PNG", alt="vide")
-                  div(class="carousel-caption d-none d-md-block")
-                    h5= data.title
-                    p= data.author
-      a(class="carousel-control-prev", href="#carousel", role="button", data-slide="prev")
-        span(class="carousel-control-prev-icon", aria-hidden="true")
-        span(class="sr-only") Précédent
-      a(class="carousel-control-next", href="#carousel", role="button", data-slide="next")
-        span(class="carousel-control-next-icon", aria-hidden="true")
-        span(class="sr-only") Suivant
+            ol(class="carousel-indicators")
+                each data, index in datas
+                    case index
+                        when 0
+                            li(data-target="#carousel", data-slide-to=index, class="active")
+                        default
+                            li(data-target="#carousel", data-slide-to=index)
+
+            div(class="carousel-inner")
+                each data, index in datas
+                    if datas
+                        case index
+                            when 0
+                                div(class="carousel-item active")
+                                    if data.filename
+                                        figure(class="figure")
+                                            a(href=data._id)
+                                                img(class="d-block w-50 img-thumbnail img-fluid", src=`${data.filename}`, alt= `${data.filename}`)
+                                                figcaption(class="figure-caption d-none d-md-block text-success text-left")
+                                                    h5= `${data.filename}.${data.contentType}`
+                                                    p= `Taille: ${data.length}    Upload: ${uploaded}`
+                                                    script.
+                                                        var uploaded=new Date(data.uploadDate).getDate();
+                            default
+                                div(class="carousel-item")
+                                    if data.filename
+                                        figure(class="figure")
+                                            a(href=data._id)
+                                                img(class="d-block w-50 img-thumbnail img-fluid", src=`${data.filename}`, alt= `${data.filename}`)
+                                                figcaption(class="figure-caption d-none d-md-block text-success text-left")
+                                                    h5= `${data.filename}.${data.contentType}`
+                                                    p= `Taille: ${data.length}    Upload: ${uploaded}`
+                                                    script.
+                                                        var uploaded = new Date(data.uploadDate).getDate();
+                    else
+                        div(class="carousel-item")
+                            a(href=data._id)
+                                img(class="d-block w-50 img-thumbnail img-fluid", src="/statics/img/img404.PNG", alt="vide")
+                                div(class="figure-caption d-none d-md-block text-success text-left")
+                                    h5= "Pas de photos pour le moment"
+                                    p= "Ajouter des photo"
+            a(class="carousel-control-prev", href="#carousel", role="button", data-slide="prev")
+                span(class="carousel-control-prev-icon text-secondary", aria-hidden="true")
+                span(class="sr-only") Précédent
+            a(class="carousel-control-next text-success", href="#carousel", role="button", data-slide="next")
+                span(class="carousel-control-next-icon text-secondary", aria-hidden="true")
+                span(class="sr-only") Suivant
