@@ -2,7 +2,7 @@ extends layout
 
 block carousel
 
-   - var datas = datas || [{}]
+   - var datas = files || [{}]
 
    if errors
      ul.my-errors
@@ -31,32 +31,36 @@ block carousel
             case index
               when 0
                 div(class="carousel-item active")
-                  if data.body
+                  if data.filename
                     figure(class="figure")
-                      a(href=data.id)
-                        img(class="d-block w-50 img-thumbnail img-fluid", src=`${data.body[1]}`, alt= `${data.body[0]}`)
+                      a(href=data._id)
+                        img(class="d-block w-50 img-thumbnail img-fluid", src=`${data.filename}`, alt= `${data.filename}`)
                         figcaption(class="figure-caption d-none d-md-block text-success text-left")
-                          h5= data.title
-                          p= data.author
+                          h5= `${data.filename}.${data.contentType}`
+                          p= `Taille: ${data.length}    Upload: ${uploaded}`
+                          script.
+                            var uploaded=new Date(data.uploadDate).getDate();
               default
                 div(class="carousel-item")
-                  if data.body
+                  if data.filename
                     figure(class="figure")
-                      a(href=data.id)
-                        img(class="d-block w-50 img-thumbnail img-fluid", src=`${data.body[1]}`, alt= `${data.body[0]}`)
+                      a(href=data._id)
+                        img(class="d-block w-50 img-thumbnail img-fluid", src=`${data.filename}`, alt= `${data.filename}`)
                         figcaption(class="figure-caption d-none d-md-block text-success text-left")
-                          h5= data.title
-                          p= data.author
+                          h5= `${data.filename}.${data.contentType}`
+                          p= `Taille: ${data.length}    Upload: ${uploaded}`
+                          script.
+                            var uploaded = new Date(data.uploadDate).getDate();
           else
             div(class="carousel-item")
-              a(href=data.id)
+              a(href=data._id)
                 img(class="d-block w-50 img-thumbnail img-fluid", src="/statics/img/img404.PNG", alt="vide")
                 div(class="figure-caption d-none d-md-block text-success text-left")
-                  h5= data.title
-                  p= data.author
+                  h5= "Pas de photos pour le moment"
+                  p= "Ajouter des photo"
       a(class="carousel-control-prev", href="#carousel", role="button", data-slide="prev")
-        span(class="carousel-control-prev-icon", aria-hidden="true")
+        span(class="carousel-control-prev-icon text-secondary", aria-hidden="true")
         span(class="sr-only") Précédent
-      a(class="carousel-control-next", href="#carousel", role="button", data-slide="next")
-        span(class="carousel-control-next-icon", aria-hidden="true")
+      a(class="carousel-control-next text-success", href="#carousel", role="button", data-slide="next")
+        span(class="carousel-control-next-icon text-secondary", aria-hidden="true")
         span(class="sr-only") Suivant
