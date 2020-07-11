@@ -2,33 +2,35 @@ extends layout
 
 block carousel
 
-  - var data = data || [{}]
+  - var data = file || {}
 
-  if errors
-    ul.my-errors
-      for error in errors
-        li= error.msg
+  section
+    article
+      h1(class="text-secondary text-center")= `Détails de la photo "${data.title}"`
 
-  h1(class="text-success text-center")= `Détails de la photo "${data.title}"`
-  div(class="container-fluid card", style="max-width: 85rem;")
-    div(class="container-fluid card-header bg-success")
+      // image
+      div(class="container-fluid row")
+        figure(class="figure text-center col")
+          img(class="figure-img img-fluid img-thumbnail d-block w-75", src=data.body, alt="photo à editer")
 
-      br
-      p= `Auteur: ${data.author}`
-      br
+        div(class="container-fluid col")
+          br
+          br
+          p <strong>Titre:</strong> <em>#{data.title}</em>
+          p <strong>Url:</strong>   <em>#{data.body}</em>
 
-    div(class="container-fluid card-body")
-      figure
-        img(src=data.body, alt="photo à editer")
-        figcaption= data.title
-      br
-    div(class="container-fluid card-footer bg-success")
-      div(class="row", role="group", aria-label="Basic example")
-        div(class="col-2")
-          a(href=`/edit/${data.id}`)
-            button(class="btn btn-success") Modifier
-        div(class="col-2")
-          form(method="delete", action="/image/delete")
-             input(value=data.id, name="id", hidden=true)
-             button(class="btn btn-danger", type="submit") Supprimer
+      div(class="container-fluid bg-black btn-bar")
+        div(class="row text-center", role="group", aria-label="Boutons d'actions")
 
+          div(class="col-4")
+
+          // Bouton Modifier
+          div(class="col-2")
+            a(href=`/edit/${data._id}`)
+              button(class="btn btn-success") Modifier
+
+          // Bouton supprimer
+          div(class="col-2")
+            form(method="delete", action=`/${data._id}`)
+               input(value=data._id, name="id", hidden=true)
+               button(class="btn btn-danger", type="submit") Supprimer

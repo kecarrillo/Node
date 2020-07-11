@@ -1,11 +1,20 @@
+/**
+ * Imports
+ * @type {createApplication}
+ */
 const express = require('express');
 const http = require('http');
 const path = require('path');
 const bodyParser = require('body-parser');
-
 const mongoose = require('mongoose');
 
-// Connection to db
+const images = require('./routes/images');
+const Image = require('./models/image');
+
+/**
+ * Connection à la BDD
+ * @type {string}
+ */
 let DB_URL = 'mongodb://localhost/mongoDb';
 mongoose.connect(DB_URL, {
   useUnifiedTopology: true,
@@ -14,51 +23,62 @@ mongoose.connect(DB_URL, {
   console.log(`Connected to ${DB_URL} database for lesson`)
 });
 
+/**
+ * Définition de l'application
+ * @type {*|app}
+ */
+const app = express();
 
-
-let app = express();
-
-// Bring in Models
-// let Image = require('./models/image');
-
+/**
+ * Configuration
+ */
 app.set('appName', 'PhotoStream');
 app.set('port', process.env.PORT || 3001);
 app.set('views', path.join(__dirname, 'views') );
 app.set('view engine', 'pug');
 
-// Set Views Folder
+/**
+ * Définition du path
+ */
 app.use(express.static(path.join(__dirname, 'views')));
+
+/**
+ * Parseur de JSON
+ */
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+/**
+ * Initialisation de l'application
+ */
 app.all('/',(req, resp)=>{
-    resp.render('index2',
-        { title: "PhotoStream", datas: [{id: "1", title: "monTitre", author: "Bibi", body: ["monTitre2Tof", "/statics/img/ground.jpg"]},
-        {id: "2", title: "monTitre2", author: "Bibi", body: ["monTitre2Tof2", "/statics/img/exercice.jpg"]}]
-        });
+    Image.find({}, function(err, files){
+        if(err){
+            console.log(err);
+        } else {
+            console.log(files);
+            resp.render('index2', {
+                title: "PhotoStream",
+                files: files
+            });
+        }
+    });
 });
 
-
-// Display images from db in home page
-// app.get('/', function(req, res){
-//     Image.find({}, function(err, images){
-//       if(err){
-//         console.log(err);
-//       } else {
-//         res.render('index', {
-//           title:'images',
-//           images: images
-//         });
-//       }
-//     });
-//   });
-
-// // Routes files
-var images = require('./routes/images');
-// let users = require('./routes/users');
+/**
+ * Appel des méthodes
+ */
 app.use('/', images);
+
+// /**
+//  * Gestion des autorisations
+//  */
+// let users = require('./routes/users');
 // app.use('/users', users);
 
+/**
+ * Lancement du server
+ */
 http .createServer(app)
     .listen(
         app.get('port'),

@@ -3,13 +3,6 @@ const router = express.Router();
 
 // Image Model
 let Image = require('../models/image');
-// User Model
-let User = require('../models/user');
-
-// Home
-router.get('/', function (req, res) {
-  res.send({title: "PhotoStream"});
-});
 
 // Add Route
 router.get('/add', function(req, res){
@@ -20,8 +13,8 @@ router.get('/add', function(req, res){
 
 // Add Submit POST Route
 router.post('/add', function(req, res){
-  console.log("objet à enregistrer");
-  console.log(req.body.title)
+  console.log("Objet à enregistrer:");
+  console.log(req.body.title);
 
     let image = new Image();
     image.title = req.body.title;
@@ -30,25 +23,21 @@ router.post('/add', function(req, res){
     image.save(function(err){
       if(err){
         console.log(err);
-        return;
       } else {
         res.redirect('/');
       }
     });
-  
 });
 
 // Load Edit Form
 router.get('/edit/:id', function(req, res){
-  Image.findById(req.params.id, function(err, image){
-    if(image.author != req.user._id){
-      req.flash('danger', 'Not Authorized');
-      return res.redirect('/');
-    }
+  Image.findById(req.params.id, function(err, file){
+
     res.render('edit_image', {
-      title:'Edit Image',
-      image:image
+      title:'Modifier une photo',
+      file:file
     });
+
   });
 });
 
@@ -56,17 +45,14 @@ router.get('/edit/:id', function(req, res){
 router.post('/edit/:id', function(req, res){
   let image = {};
   image.title = req.body.title;
-  image.author = req.body.author;
   image.body = req.body.body;
 
-  let query = {_id:req.params.id}
+  let query = {_id:req.params.id};
 
-  Image.update(query, image, function(err){
+  Image.updateOne(query, image, function(err){
     if(err){
       console.log(err);
-      return;
     } else {
-      req.flash('success', 'Image Updated');
       res.redirect('/');
     }
   });
@@ -74,43 +60,28 @@ router.post('/edit/:id', function(req, res){
 
 // Delete Image
 router.delete('/:id', function(req, res){
-  if(!req.user._id){
-    res.status(500).send();
-  }
 
-  let query = {_id:req.params.id}
+  let query = {_id:req.params.id};
 
-  Image.findById(req.params.id, function(err, image){
-    if(image.author != req.user._id){
-      res.status(500).send();
-    } else {
-      Image.remove(query, function(err){
-        if(err){
-          console.log(err);
-        }
-        res.send('Success');
-      });
-    }
+  Image.findById(req.params.id, function(err, file){
+
+    Image.remove(query, function(err){
+      if(err){
+        console.log(err);
+      }
+      res.redirect('/');
+    });
+
   });
 });
 
 // Get Single Image
 router.get('/:id', function(req, res){
-  Image.findById(req.params.id, function(err, image){
+  Image.findById(req.params.id, function(err, file){
       res.render('image', {
-        image:image
+        file:file
       });
     });
 });
-
-// Access Control
-function ensureAuthenticated(req, res, next){
-  if(req.isAuthenticated()){
-    return next();
-  } else {
-    req.flash('danger', 'Please login');
-    res.redirect('/users/login');
-  }
-}
 
 module.exports = router;
