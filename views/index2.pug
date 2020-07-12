@@ -27,7 +27,7 @@ block carousel
             when [{}] || undefined
               div(class="carousel-item")
                 a(href=data._id)
-                    img(class="d-block w-50 img-thumbnail img-fluid", src="/statics/img/img404.PNG", alt="vide")
+                    img(class="d-block w-50 h-75 img-thumbnail img-fluid", src="/statics/img/img404.PNG", alt="vide")
                     div(class="figure-caption d-none d-md-block text-success text-left")
                         h5= "Pas de photos pour le moment"
                         p= "Ajouter des photo"
@@ -39,7 +39,7 @@ block carousel
                       if data
                         figure(class="figure")
                           a(href=data._id)
-                            img(class="d-block w-50 img-thumbnail img-fluid", src=`${data.body}`, alt= `${data.title}`)
+                            img(class="d-block h-50 img-fluid img-thumbnail", src=`${data.body}`, alt= `${data.title}`)
                             figcaption(class="figure-caption d-none d-md-block text-success text-left")
                               h5= `${data.title}`
                   default
@@ -47,7 +47,7 @@ block carousel
                       if data
                         figure(class="figure")
                           a(href=data._id)
-                            img(class="d-block w-50 img-thumbnail img-fluid", src=`${data.body}`, alt= `${data.title}`)
+                            img(class="d-block h-50 img-thumbnail", src=`${data.body}`, alt= `${data.title}`)
                             figcaption(class="figure-caption d-none d-md-block text-success text-left")
                               h5= `${data.title}`
 

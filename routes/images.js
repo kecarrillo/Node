@@ -1,17 +1,28 @@
+/**
+ * Appel des routes et de l'application
+ * @type {createApplication}
+ */
 const express = require('express');
 const router = express.Router();
 
-// Image Model
+/**
+ * Appel du Model Image
+ */
 let Image = require('../models/image');
 
-// Add Route
+/**
+ * Affichage du formulaire d'ajout
+ */
 router.get('/add', function(req, res){
   res.render('../views/add_image2', {
-    title:'Add Image'
+    title:'Ajouter une photo'
   });
 });
 
-// Add Submit POST Route
+/**
+ * Récupération et traitement de la requête HTTP
+ * POST du formulaire d'ajout
+ */
 router.post('/add', function(req, res){
   console.log("Objet à enregistrer:");
   console.log(req.body.title);
@@ -29,7 +40,9 @@ router.post('/add', function(req, res){
     });
 });
 
-// Load Edit Form
+/**
+ * Affichage du formulaire de modification
+ */
 router.get('/edit/:id', function(req, res){
   Image.findById(req.params.id, function(err, file){
 
@@ -41,13 +54,16 @@ router.get('/edit/:id', function(req, res){
   });
 });
 
-// Update Submit POST Route
+/**
+ * Récupération et traitement de la requête HTTP
+ * POST du formulaire de modification
+ */
 router.post('/edit/:id', function(req, res){
   let image = {};
   image.title = req.body.title;
   image.body = req.body.body;
 
-  let query = {_id:req.params.id};
+  let query = {_id: req.params.id};
 
   Image.updateOne(query, image, function(err){
     if(err){
@@ -58,30 +74,32 @@ router.post('/edit/:id', function(req, res){
   });
 });
 
-// Delete Image
+/**
+ * Récupération et traitement de la requête HTTP
+ * DELETE de demande de suppression
+ */
 router.delete('/:id', function(req, res){
 
-  let query = {_id:req.params.id};
-
-  Image.findById(req.params.id, function(err, file){
-
-    Image.remove(query, function(err){
-      if(err){
-        console.log(err);
-      }
-      res.redirect('/');
-    });
-
+  Image.findByIdAndDelete(req.params.id, function (err) {
+    if(err) res.status(500).send('Erreur lors de la tentative de suppression de ' + req.params.id);
   });
+  res.status(200).send('Suppression effectuée avec succès.');
 });
 
-// Get Single Image
+/**
+ * Affichage du détail
+ */
 router.get('/:id', function(req, res){
   Image.findById(req.params.id, function(err, file){
       res.render('image', {
+        title:'Détails de la photo',
         file:file
       });
     });
 });
 
+/**
+ * Rend le traitement des requêtes HTTP accessible
+ * @type {Router}
+ */
 module.exports = router;

@@ -20,7 +20,7 @@ mongoose.connect(DB_URL, {
   useUnifiedTopology: true,
   useNewUrlParser: true
 }, () => {
-  console.log(`Connected to ${DB_URL} database for lesson`)
+  console.log(`Connected to ${DB_URL} database`)
 });
 
 /**
@@ -56,7 +56,6 @@ app.all('/',(req, resp)=>{
         if(err){
             console.log(err);
         } else {
-            console.log(files);
             resp.render('index2', {
                 title: "PhotoStream",
                 files: files
@@ -83,5 +82,5 @@ http .createServer(app)
     .listen(
         app.get('port'),
         () => {
-    console.log(`Express.js server ecoutes sur le port ${app.get('port')}`);
+    console.log(`Express.js server écoutes sur le port ${app.get('port')}`);
 } );

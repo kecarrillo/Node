@@ -4,23 +4,24 @@ block carousel
 
   - var data = file || {}
 
-  h1 #{title}
-  br
-
-  form(method='POST', action=`/edit/${data._id}`)
-    #form-group
-      label Titre:
-      if data.title
-        input.form-control(name='title', type='text', value=data.title)
-      else
-        input.form-control(name='title', type='text')
-    #form-group2
-      label Url:
-      if data.body
-        input.form-control(name='body', type='text', value=data.body)
-      else
-        input.form-control(name='body', type='text')
-
+  section
+    h1 #{title}
     br
-    input.btn.btn-primary(type='submit', value='Submit')
+
+    form(method='POST', action=`/edit/${data._id}`)
+      #form-group
+        label Titre:
+        if data.title
+          input.form-control(name='title', type='text', value=data.title)
+        else
+          input.form-control(name='title', type='text')
+      #form-group2
+        label Url:
+        if data.body
+          input.form-control(name='body', type='text', value=data.body)
+        else
+          input.form-control(name='body', type='text')
+
+      br
+      input.btn.btn-primary(type='submit', value='Submit')
 
