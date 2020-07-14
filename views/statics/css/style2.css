@@ -82,3 +82,7 @@ header {
 .m-b-md {
   margin-bottom: 30px;
 }
+.indicator {
+  color: #00f;
+  list-style: none;
+}

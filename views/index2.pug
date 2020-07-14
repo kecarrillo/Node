@@ -5,57 +5,57 @@ block carousel
     - var datas = files || [{}]
 
     article
-      h2(class="text-primary text-center") Accueil
+      h2.text-primary.text-center Accueil
 
       br
 
-      div(id="carousel", class="carousel slide text-center", data-ride="carousel")
+      div.carousel.slide.text-center#carousel(data-ride="carousel")
 
         // Indicateur
-        ol(class="carousel-indicators")
+        ol.carousel-indicators.text-right
           each data, index in datas
             case index
               when 0
-                li(data-target="#carousel", data-slide-to=index, class="active")
+                li.active.indicator(data-target="#carousel", data-slide-to=index) ⬬
               default
-                li(data-target="#carousel", data-slide-to=index)
+                li.indicator(data-target="#carousel", data-slide-to=index) ⬬
 
-        div(class="carousel-inner")
+        div.carousel-inner
 
           // Carousel (Cas avec puis sans données)
           case datas
             when [{}] || undefined
-              div(class="carousel-item")
+              div.carousel-item
                 a(href=data._id)
-                    img(class="d-block w-50 h-75 img-thumbnail img-fluid", src="/statics/img/img404.PNG", alt="vide")
-                    div(class="figure-caption d-none d-md-block text-success text-left")
+                    img.d-block.w-50.h-75.img-thumbnail.img-fluid(src="/statics/img/img404.PNG", alt="vide")
+                    div.figure-caption.d-none.d-md-block.text-success.text-left
                         h5= "Pas de photos pour le moment"
                         p= "Ajouter des photo"
             default
               each data, index in datas
                 case index
                   when 0
-                    div(class="carousel-item active")
+                    div.carousel-item.active
                       if data
-                        figure(class="figure")
+                        figure.figure
                           a(href=data._id)
-                            img(class="d-block h-50 img-fluid img-thumbnail", src=`${data.body}`, alt= `${data.title}`)
-                            figcaption(class="figure-caption d-none d-md-block text-success text-left")
+                            img.d-block.h-50.img-fluid.img-thumbnail(src=`${data.body}`, alt= `${data.title}`)
+                            figcaption.figure-caption.d-none.d-md-block.text-success.text-left
                               h5= `${data.title}`
                   default
-                    div(class="carousel-item")
+                    div.carousel-item
                       if data
-                        figure(class="figure")
+                        figure.figure
                           a(href=data._id)
-                            img(class="d-block h-50 img-thumbnail", src=`${data.body}`, alt= `${data.title}`)
-                            figcaption(class="figure-caption d-none d-md-block text-success text-left")
+                            img.d-block.h-50.img-thumbnail(src=`${data.body}`, alt= `${data.title}`)
+                            figcaption.figure-caption.d-none.d-md-block.text-success.text-left
                               h5= `${data.title}`
 
         // Boutons Précédent / Suivant
-        a(class="carousel-control-prev", href="#carousel", role="button", data-slide="prev")
-          span(class="carousel-control-prev-icon text-secondary", aria-hidden="true")
-          span(class="sr-only") Précédent
+        a.carousel-control-prev(href="#carousel", role="button", data-slide="prev")
+          span.carousel-control-prev-icon.text-secondary(aria-hidden="true")
+          span.sr-only Précédent
 
-        a(class="carousel-control-next text-success", href="#carousel", role="button", data-slide="next")
-          span(class="carousel-control-next-icon text-secondary", aria-hidden="true")
-          span(class="sr-only") Suivant
+        a.carousel-control-next.text-success(href="#carousel", role="button", data-slide="next")
+          span.carousel-control-next-icon.text-secondary(aria-hidden="true")
+          span.sr-only Suivant

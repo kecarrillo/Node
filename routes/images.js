@@ -35,10 +35,12 @@ router.post('/add', function(req, res){
       (d.getHours().toString().length==2?d.getHours().toString():"0"+d.getHours().toString()) +":"+
       ((parseInt(d.getMinutes()/5)*5).toString().length==2?
           (parseInt(d.getMinutes()/5)*5).toString():"0"+(parseInt(d.getMinutes()/5)*5).toString())+":00";
+  const title = req.body.title;
+  const body = req.body.body;
 
   let image = new Image();
-  image.title = req.body.title;
-  image.body = req.body.body;
+  image.title = title;
+  image.body = body;
   image.created = createdDate;
   image.updated = createdDate;
 
@@ -100,14 +102,15 @@ router.post('/edit/:id', function(req, res){
  * Récupération et traitement de la requête HTTP
  * DELETE de demande de suppression
  */
-router.delete('/:id', function(req, res){
-
+router.post('/delete/:id', function(req, res){
+  console.log('deleting session');
   Image.findByIdAndDelete(req.params.id, function (err) {
     if(err) {
         res.status(500).send('Erreur lors de la tentative de suppression de ' + req.params.id);
     }
   });
-  res.status(201).render('/', {title: "PhotoStream"});
+  console.log('Suppression effectuée avec succès.');
+  res.status(200).redirect('/');
 });
 
 /**

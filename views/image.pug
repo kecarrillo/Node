@@ -6,14 +6,14 @@ block carousel
 
   section
     article
-      h1(class="text-secondary text-center")= `Détails de "${data.title}"`
+      h1.text-secondary.text-center= `Détails de "${data.title}"`
 
       // image
-      div(class="container-fluid row")
-        figure(class="figure text-center col")
-          img(class="figure-img img-fluid img-thumbnail d-block w-75", src=data.body, alt="photo à editer")
+      div.container-fluid.row
+        figure.figure.text-center.col
+          img.figure-img.img-fluid.img-thumbnail.d-block.w-75(src=data.body, alt="photo à editer")
 
-        div(class="container-fluid col")
+        div.container-fluid.col
           br
           br
           p <strong>Titre:</strong> <em>#{data.title}</em>
@@ -21,18 +21,18 @@ block carousel
           p <strong>Création:</strong>   <em>#{data.created}</em>
           p <strong>Modification:</strong>   <em>#{data.updated}</em>
 
-      div(class="container-fluid bg-black btn-bar")
-        div(class="row text-center", role="group", aria-label="Boutons d'actions")
+      div.container-fluid.bg-black.btn-bar
+        div.row.text-center(role="group", aria-label="Boutons d'actions")
 
-          div(class="col-4")
+          div.col-4
 
           // Bouton Modifier
-          div(class="col-2")
+          div.col-2
             a(href=`/edit/${data._id}`)
-              button(class="btn btn-success") Modifier
+              button.btn.btn-success Modifier
 
           // Bouton supprimer
-          div(class="col-2")
-            form(method='DELETE', action=`/${data._id}`)
+          div.col-2
+            form(method="post", action=`/delete/${data._id}`)
                input#id(value=data._id, name="id", hidden=true)
-               input.btn.btn-danger(type='submit', value='Supprimer')
+               button.btn.btn-danger(type="submit") Supprimer
