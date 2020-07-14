@@ -31,6 +31,6 @@ block carousel
 
           // Bouton supprimer
           div(class="col-2")
-            form(method="delete", action=`/${data._id}`)
-               input(value=data._id, name="id", hidden=true)
+            form(method="post", action=`/delete/${data._id}`)
+               input(id='id' value=data._id, name="id", hidden=true)
                button(class="btn btn-danger", type="submit") Supprimer

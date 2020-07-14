@@ -78,12 +78,13 @@ router.post('/edit/:id', function(req, res){
  * Récupération et traitement de la requête HTTP
  * DELETE de demande de suppression
  */
-router.delete('/:id', function(req, res){
-
+router.post('/delete/:id', function(req, res){
+  console.log('deleting session')
   Image.findByIdAndDelete(req.params.id, function (err) {
     if(err) res.status(500).send('Erreur lors de la tentative de suppression de ' + req.params.id);
   });
   res.status(200).send('Suppression effectuée avec succès.');
+  res.redirect('/');
 });
 
 /**
