@@ -1,14 +1,21 @@
 extends layout
 
 block carousel
-  h1 #{title}
-  form(method='POST', action='/add')
-    #form-group
-      label Titre:
-      input.form-control(name='title', type='text')
-    #form-group
-      label Url:
-      input.form-control(name='body', type='text')
+  section
+    h1.text-center.text-primary Poster une photo
+    form(method='POST', action='/add')
+      .form-group
+        label.font-weight-bold(for="title") Titre:
+        div.input-group.mb-3
+          div.input-group-prepend
+            span.input-group-text#titre Mon titre de photo
+          input.form-control#title(name='title', type='text', aria-describedby="titre")
+      .form-group
+        label.font-weight-bold(for="body") Url:
+        div.input-group.mb-3
+          div.input-group-prepend
+            span.input-group-text#url https://exemple.com/maPhoto.png
+          input.form-control#body(name='body', type='text', aria-describedby="url")
 
-    br
-    input.btn.btn-primary(type='submit', value='Submit')
+      br
+      input.btn.btn-primary(type='submit', value='Envoyer')

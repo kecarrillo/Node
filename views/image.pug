@@ -18,6 +18,8 @@ block carousel
           br
           p <strong>Titre:</strong> <em>#{data.title}</em>
           p <strong>Url:</strong>   <em>#{data.body}</em>
+          p <strong>Création:</strong>   <em>#{data.created}</em>
+          p <strong>Modification:</strong>   <em>#{data.updated}</em>
 
       div(class="container-fluid bg-black btn-bar")
         div(class="row text-center", role="group", aria-label="Boutons d'actions")
@@ -31,6 +33,6 @@ block carousel
 
           // Bouton supprimer
           div(class="col-2")
-            form(method="delete", action=`/${data._id}`)
-               input(value=data._id, name="id", hidden=true)
-               button(class="btn btn-danger", type="submit") Supprimer
+            form(method='DELETE', action=`/${data._id}`)
+               input#id(value=data._id, name="id", hidden=true)
+               input.btn.btn-danger(type='submit', value='Supprimer')

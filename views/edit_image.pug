@@ -1,27 +1,28 @@
 extends layout
 
 block carousel
-
   - var data = file || {}
-
   section
-    h1 #{title}
+    h1.text-center.text-secondary= `Modifier la photo ${data.title}`
     br
-
     form(method='POST', action=`/edit/${data._id}`)
-      #form-group
-        label Titre:
-        if data.title
-          input.form-control(name='title', type='text', value=data.title)
-        else
-          input.form-control(name='title', type='text')
-      #form-group2
-        label Url:
-        if data.body
-          input.form-control(name='body', type='text', value=data.body)
-        else
-          input.form-control(name='body', type='text')
-
+      .form-group
+        label.font-weight-bold(for="title") Titre:
+        div.input-group.mb-3
+          div.input-group-prepend
+            span.input-group-text#titre Mon titre de photo
+          if data.title
+            input.form-control#title(name='title', type='text', value=data.title, aria-describedby="titre")
+          else
+            input.form-control#title(name='title', type='text', aria-describedby="titre")
+      .form-group
+        label.font-weight-bold(for="body") Url:
+        div.input-group.mb-3
+          div.input-group-prepend
+            span.input-group-text#url https://exemple.com/maPhoto.png
+          if data.body
+            input.form-control#body(name='body', type='text', value=data.body, aria-describedby="url")
+          else
+            input.form-control#body(name='body', type='text', aria-describedby="url")
       br
-      input.btn.btn-primary(type='submit', value='Submit')
-
+      input.btn.btn-primary(type='submit', value='Renvoyer')

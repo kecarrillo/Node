@@ -16,11 +16,26 @@ const Image = require('./models/image');
  * @type {string}
  */
 let DB_URL = 'mongodb://localhost/mongoDb';
+let db;
+
 mongoose.connect(DB_URL, {
   useUnifiedTopology: true,
   useNewUrlParser: true
-}, () => {
-  console.log(`Connected to ${DB_URL} database`)
+}, (err, database) => {
+    db = database;
+    db.collection("image", { }, function(err, coll) {
+        if (err != null) {
+            db.createCollection("image", function(err, result) {
+                assert.equal(null, err);
+            });
+        }
+        db.ensureIndex("image", {
+            title: "text"
+        }, function(err, indexname) {
+            assert.equal(null, err);
+        });
+    });
+    console.log(`Connected to ${DB_URL} database`)
 });
 
 /**
