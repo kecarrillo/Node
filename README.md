@@ -31,6 +31,10 @@ Créer un site de ***stream de photo***:
 - **[Bootstrap](https://getbootstrap.com/)**
 - **[Mongodb](https://www.frugalprototype.com/api-mongodb-mongoose-node-js/)**
 
+# Lancer l'application
+Dans une console qui pointe sur la racine du projet, saisissez:
+
+    npm run watch
 
 # BDD fictive
 Utiliser mongoDb:
