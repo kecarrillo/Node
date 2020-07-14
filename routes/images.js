@@ -83,7 +83,7 @@ router.post('/delete/:id', function(req, res){
   Image.findByIdAndDelete(req.params.id, function (err) {
     if(err) res.status(500).send('Erreur lors de la tentative de suppression de ' + req.params.id);
   });
-  res.status(200).send('Suppression effectuée avec succès.');
+  //res.status(200).send('Suppression effectuée avec succès.');
   res.redirect('/');
 });
 
